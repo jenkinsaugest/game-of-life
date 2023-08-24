@@ -1,0 +1,8 @@
+node('MAVEN_JDK8'){
+    stage('version control'){
+         url: 'https://github.com/jenkinsaugest/game-of-life.git',
+         branch :'scripted',
+         poll : false
+    }
+}
+
