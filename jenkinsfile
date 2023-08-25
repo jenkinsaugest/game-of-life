@@ -1,26 +1,27 @@
 pipeline {
-    agent{ label('MAVEN_JDK8')}
+    agent { label 'MAVEN_JDK8' }
     stages {
-        stage('vcs')
-        steps {
-            git url: 'https://github.com/jenkinsaugest/game-of-life.git',
-            branch :'declarative'
+        stage('vcs') {
+            steps {
+                git url: 'https://github.com/jenkinsaugest/game-of-life.git',
+                    branch: 'declarative'
+            }
         }
-    }
-    stage('package') {
-        tools {
-            jdk 'JDK-8-UBUNTU',
-            sh "mvn package"
+        stage('package') {
+            steps {
+                sh 'mvn package'
+            }
         }
-    }
-    stage('post build') {
-        steps {
-            archiveArtifacts artifacts: '**/target/gameoflife.war',
-            onlyIfSuccessful :true,
-            junit testResults :'**/surefire-reports/TEST-*.xml'
+        stage('post build') {
+            steps {
+                archiveArtifacts artifacts: '**/target/gameoflife.war',
+                                 onlyIfSuccessful: true
+                junit testResults: '**/surefire-reports/TEST-*.xml'
+            }
         }
     }
 }
+
 
     
 
